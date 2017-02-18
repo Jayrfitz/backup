@@ -7,7 +7,7 @@ export class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'numbers': []
+            'numbers': [1]
         };
     }
 
@@ -25,9 +25,16 @@ export class Content extends React.Component {
         );
         return (
             <div>
-                <h1 className="heading">Random numbers so far!</h1>
-                <Button />
-                <ul>{numbers}</ul>
+             <h1>Random numbers by person!</h1>
+             <div
+                 className="fb-login-button"
+                 data-max-rows="1"
+                 data-size="medium"
+                 data-show-faces="false"
+                 data-auto-logout-link="true">
+             </div>
+             <Button />
+             <ul>{numbers}</ul>
             </div>
         );
     }

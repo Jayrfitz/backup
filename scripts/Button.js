@@ -17,7 +17,7 @@ export class Button extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <button>Send up a random number!</button>
+                <button>Send!</button>
             </form>
         );
     }
