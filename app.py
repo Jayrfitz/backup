@@ -16,6 +16,16 @@ def on_connect():
 @socketio.on('disconnect')
 def on_disconnect():
     print 'Someone disconnected!'
+    
+all_mah_message = []
+
+@socketio.on('new message')
+def on_new_message(data):
+    print "Got an event for new message with data:", data
+    all_mah_message.append(data['message'])
+    socketio.emit('all messages', {
+        'messages': all_mah_message
+    })
 
 all_mah_numbers = []
 

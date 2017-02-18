@@ -8,6 +8,11 @@ export class Button extends React.Component {
         
         var message = this.refs.text.value.trim();
         console.log(message);
+        Socket.emit('new message', {
+            'message': message,
+        });
+        console.log('Sent up the message to server!');
+        
         let random = Math.floor(Math.random() * 100);
         console.log('Generated a random number: ', random);
         Socket.emit('new number', {

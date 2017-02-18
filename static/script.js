@@ -13072,11 +13072,11 @@ var Content = exports.Content = function (_React$Component) {
     function Content(props) {
         _classCallCheck(this, Content);
 
+        // this.state = {'numbers': []};
         var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
 
-        _this.state = {
-            'numbers': []
-        };
+        _this.state = { 'messages': [] };
+
         return _this;
     }
 
@@ -13085,29 +13085,43 @@ var Content = exports.Content = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            _Socket.Socket.on('all numbers', function (data) {
+            _Socket.Socket.on('all messages', function (data) {
                 _this2.setState({
-                    'numbers': data['numbers']
+                    'messages': data['messages']
                 });
             });
+            // Socket.on('all numbers', (data) => {
+            //     this.setState({
+            //         'numbers': data['numbers']
+            //     });
+            // });
         }
     }, {
         key: 'render',
         value: function render() {
-            var numbers = this.state.numbers.map(function (n, index) {
+            // let numbers = this.state.numbers.map(
+            //     (n, index) => <li className="number-item" key={index}>{n}</li>
+            // );
+            var messages = this.state.messages.map(function (n, index) {
                 return React.createElement(
                     'li',
-                    { className: 'number-item', key: index },
+                    { className: 'message-item', key: index },
                     n
                 );
             });
+            console.log(messages);
             return React.createElement(
                 'div',
                 null,
                 React.createElement(
                     'h1',
                     null,
-                    'Random numbers by person!'
+                    'Random number and message!'
+                ),
+                React.createElement(
+                    'ul',
+                    null,
+                    messages
                 ),
                 React.createElement('div', {
                     className: 'fb-login-button',
@@ -13115,12 +13129,7 @@ var Content = exports.Content = function (_React$Component) {
                     'data-size': 'medium',
                     'data-show-faces': 'false',
                     'data-auto-logout-link': 'true' }),
-                React.createElement(_Button.Button, null),
-                React.createElement(
-                    'ul',
-                    null,
-                    numbers
-                )
+                React.createElement(_Button.Button, null)
             );
         }
     }]);
@@ -13182,6 +13191,11 @@ var Button = exports.Button = function (_React$Component) {
 
             var message = this.refs.text.value.trim();
             console.log(message);
+            _Socket.Socket.emit('new message', {
+                'message': message
+            });
+            console.log('Sent up the message to server!');
+
             var random = Math.floor(Math.random() * 100);
             console.log('Generated a random number: ', random);
             _Socket.Socket.emit('new number', {
