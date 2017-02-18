@@ -5,7 +5,9 @@ import { Socket } from './Socket';
 export class Button extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
-
+        
+        var message = this.refs.text.value.trim();
+        console.log(message);
         let random = Math.floor(Math.random() * 100);
         console.log('Generated a random number: ', random);
         Socket.emit('new number', {
@@ -16,9 +18,12 @@ export class Button extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <button>Send!</button>
-            </form>
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <textarea ref="text"></textarea>
+                    <button onClick={this.handleSubmit.bind(this)}>Send!</button>
+                </form>
+            </div>
         );
     }
 }

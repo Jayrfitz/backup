@@ -13075,7 +13075,7 @@ var Content = exports.Content = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
 
         _this.state = {
-            'numbers': [1]
+            'numbers': []
         };
         return _this;
     }
@@ -13180,6 +13180,8 @@ var Button = exports.Button = function (_React$Component) {
         value: function handleSubmit(event) {
             event.preventDefault();
 
+            var message = this.refs.text.value.trim();
+            console.log(message);
             var random = Math.floor(Math.random() * 100);
             console.log('Generated a random number: ', random);
             _Socket.Socket.emit('new number', {
@@ -13191,12 +13193,17 @@ var Button = exports.Button = function (_React$Component) {
         key: 'render',
         value: function render() {
             return React.createElement(
-                'form',
-                { onSubmit: this.handleSubmit },
+                'div',
+                null,
                 React.createElement(
-                    'button',
-                    null,
-                    'Send!'
+                    'form',
+                    { onSubmit: this.handleSubmit },
+                    React.createElement('textarea', { ref: 'text' }),
+                    React.createElement(
+                        'button',
+                        { onClick: this.handleSubmit.bind(this) },
+                        'Send!'
+                    )
                 )
             );
         }

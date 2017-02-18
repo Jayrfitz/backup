@@ -7,7 +7,7 @@ export class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'numbers': [1]
+            'numbers': []
         };
     }
 
@@ -16,7 +16,7 @@ export class Content extends React.Component {
             this.setState({
                 'numbers': data['numbers']
             });
-        })
+        });
     }
 
     render() {
