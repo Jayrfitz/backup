@@ -51,5 +51,3 @@ socketio.run(
 
 
     
-#     curl -i -X GET \
-#  "https://graph.facebook.com/v2.8/me?fields=id%2Cname&access_token=EAAGDXR30czkBAGzCWMj7ZA2IbdmUZASG9fFvA57ZAqD5DMkbouzt5ZA6uTsOUDyCkZCqbabQPKhINOJ7FJLwhGtV3eSFuOwu1f0qanbFQqeySfl7ehh5tz8Qc9IQeCZBq64GxZAyvLC0ZCzwWcS62wybLY55JceHQdSb2iViF5a0WkpNY0qBlmhuyRIWZAh3hHxsZD"
