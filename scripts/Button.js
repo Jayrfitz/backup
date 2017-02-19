@@ -6,19 +6,18 @@ export class Button extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         
-        var message = this.refs.text.value.trim();
+        let message = this.refs.text.value.trim();
         console.log(message);
-        Socket.emit('new message', {
-            'message': message,
+        FB.getLoginStatus((response) => {
+            if (response.status == 'connected') {
+                Socket.emit('new message', {
+                    'facebook_user_token':
+                        response.authResponse.accessToken,
+                    'message': message,
+                });
+            }
         });
         console.log('Sent up the message to server!');
-        
-        let random = Math.floor(Math.random() * 100);
-        console.log('Generated a random number: ', random);
-        Socket.emit('new number', {
-            'number': random,
-        });
-        console.log('Sent up the random number to server!');
     }
 
     render() {
