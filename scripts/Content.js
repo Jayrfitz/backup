@@ -19,10 +19,6 @@ export class Content extends React.Component {
     }
     
     render() {
-        
-        // let messages = this.state.messages.map(
-        //     (n, index) => <li className="message-item" key={index}>{n}</li>
-        // );
         let messages = this.state.messages.map((n, index) => 
             <li key={index}>
                 <img src={n.picture} />
@@ -32,19 +28,22 @@ export class Content extends React.Component {
         console.log(messages);
         return (
             <div>
-                 
-                 <h1>Message!</h1>
-                 <ul>{messages}</ul>
-                 <div
-                     className="fb-login-button"
-                     data-max-rows="1"
-                     data-size="large"
-                     data-show-faces="true"
-                     data-auto-logout-link="true">
+                <div>
+                     <h1>Message</h1>
+                     <ul>{messages}</ul>
+                     <div
+                         className="fb-login-button"
+                         data-max-rows="1"
+                         data-size="large"
+                         data-show-faces="true"
+                         data-auto-logout-link="true">
+                     </div>
+                     <div
+                        className="g-signin2"
+                        data-theme="dark">
+                     </div>
+                     <Button />
                  </div>
-                 <Button />
-                 
-            
             </div>
         );
     }

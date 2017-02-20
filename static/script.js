@@ -13093,10 +13093,6 @@ var Content = exports.Content = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-
-            // let messages = this.state.messages.map(
-            //     (n, index) => <li className="message-item" key={index}>{n}</li>
-            // );
             var messages = this.state.messages.map(function (n, index) {
                 return React.createElement(
                     'li',
@@ -13112,22 +13108,29 @@ var Content = exports.Content = function (_React$Component) {
                 'div',
                 null,
                 React.createElement(
-                    'h1',
+                    'div',
                     null,
-                    'Message!'
-                ),
-                React.createElement(
-                    'ul',
-                    null,
-                    messages
-                ),
-                React.createElement('div', {
-                    className: 'fb-login-button',
-                    'data-max-rows': '1',
-                    'data-size': 'large',
-                    'data-show-faces': 'true',
-                    'data-auto-logout-link': 'true' }),
-                React.createElement(_Button.Button, null)
+                    React.createElement(
+                        'h1',
+                        null,
+                        'Message'
+                    ),
+                    React.createElement(
+                        'ul',
+                        null,
+                        messages
+                    ),
+                    React.createElement('div', {
+                        className: 'fb-login-button',
+                        'data-max-rows': '1',
+                        'data-size': 'large',
+                        'data-show-faces': 'true',
+                        'data-auto-logout-link': 'true' }),
+                    React.createElement('div', {
+                        className: 'g-signin2',
+                        'data-theme': 'dark' }),
+                    React.createElement(_Button.Button, null)
+                )
             );
         }
     }]);
@@ -13192,9 +13195,20 @@ var Button = exports.Button = function (_React$Component) {
             FB.getLoginStatus(function (response) {
                 if (response.status == 'connected') {
                     _Socket.Socket.emit('new message', {
+                        'google_user_token': '',
                         'facebook_user_token': response.authResponse.accessToken,
                         'message': message
                     });
+                } else {
+                    var auth = gapi.auth2.getAuthInstance();
+                    var user = auth.currentUser.get();
+                    if (user.isSignedIn()) {
+                        _Socket.Socket.emit('new message', {
+                            'google_user_token': user.getAuthResponse().id_token,
+                            'facebook_user_token': '',
+                            'message': message
+                        });
+                    }
                 }
             });
             console.log('Sent up the message to server!');
