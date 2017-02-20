@@ -33,22 +33,38 @@ all_mah_message = []
 @socketio.on('new message')
 def on_new_message(data):
     
-    response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
-    + data['facebook_user_token'])
-    json = response.json()
-
+    if data['google_user_token']== '':
+        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
+        + data['facebook_user_token'])
+        json = response.json()
+        
+        
+        print "Got an event for new message with data:", data
+        # all_mah_message.append(data['message'])
+        all_mah_message.append({
+            'name': json['name'],
+            'picture': json['picture']['data']['url'],
+            'message': data['message'],
+        })
     
-    print "Got an event for new message with data:", data
-
-    all_mah_message.append({
-        'name': json['name'],
-        'picture': json['picture']['data']['url'],
-        'message': data['message'],
-    })
+    elif data['facebook_user_token']== '':
+        response = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
+        + data['google_user_token'])
+        json = response.json()
+        
+        
+        print "Got an event for new message with data:", data
+        # all_mah_message.append(data['message'])
+        all_mah_message.append({
+            'name': json['name'],
+            'picture': json['picture'],
+            'message': data['message'],
+        })
     
-    # message = models.Message(all_mah_message)
-    # models.db.session.add(message)
-    # all_mah_message.append(models.Message.query.all())
+    
+    # #message = models.Message(all_mah_message)
+    # #models.db.session.add(message)
+    # #all_mah_message.append(models.Message.query.all())
     
     socketio.emit('all messages', {
         'messages': all_mah_message
