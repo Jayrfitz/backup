@@ -2,13 +2,19 @@ import os
 import flask
 import flask_socketio
 import requests
+import flask_sqlalchemy
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
+import models
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
+db = flask_sqlalchemy.SQLAlchemy(app)
+
 @app.route('/')
 def hello():
     return flask.render_template('index.html')
+    
 
 @socketio.on('connect')
 def on_connect():
@@ -29,7 +35,6 @@ def on_new_message(data):
 
     
     print "Got an event for new message with data:", data
-    # print "Got json from request:", json
 
     all_mah_message.append({
         'name': json['name'],
@@ -37,13 +42,17 @@ def on_new_message(data):
         'message': data['message'],
     })
     
+    message = models.Message(all_mah_message)
+    models.db.session.add(message)
+    all_mah_message.append(models.Message.query.all())
+    
     socketio.emit('all messages', {
         'messages': all_mah_message
     })
-
-socketio.run(
-    app,
-    host=os.getenv('IP', '0.0.0.0'),
-    port=int(os.getenv('PORT', 8080)),
-    debug=True
-)
+if __name__ == '__main__':
+    socketio.run(
+        app,
+        host=os.getenv('IP', '0.0.0.0'),
+        port=int(os.getenv('PORT', 8080)),
+        debug=True
+    )
