@@ -13066,6 +13066,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import { UserList } from './UserList';
+
 var Content = exports.Content = function (_React$Component) {
     _inherits(Content, _React$Component);
 
@@ -13106,7 +13108,7 @@ var Content = exports.Content = function (_React$Component) {
             console.log(messages);
             return React.createElement(
                 'div',
-                null,
+                { id: 'formborder' },
                 React.createElement(
                     'div',
                     null,
@@ -13116,9 +13118,13 @@ var Content = exports.Content = function (_React$Component) {
                         'Message'
                     ),
                     React.createElement(
-                        'ul',
-                        null,
-                        messages
+                        'div',
+                        { id: 'container' },
+                        React.createElement(
+                            'ul',
+                            null,
+                            messages
+                        )
                     ),
                     React.createElement('div', {
                         className: 'fb-login-button',

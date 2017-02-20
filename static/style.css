@@ -1,0 +1,33 @@
+#formborder 
+{
+    border-radius: 25px;
+    background: #add7e6 ;
+    border: 2px solid;
+    padding: 20px; 
+    font-size: 150%;
+}
+container{
+    border-radius: 25px;
+    padding: 3px;
+    background: #6699CC;
+}
+p 
+{
+    font-size: 200%;
+}
+body
+{
+    max-width: 1000px;
+    min-width: 600px;
+}
+input[type=submit] 
+{
+    border-radius: 5px;
+    border: solid black;
+    background-color: white;
+    color: black;
+    padding: 7px 15px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}

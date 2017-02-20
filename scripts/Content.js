@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Button } from './Button';
 import { Socket } from './Socket';
+// import { UserList } from './UserList';
 
 export class Content extends React.Component {
     constructor(props) {
@@ -27,10 +28,12 @@ export class Content extends React.Component {
          );
         console.log(messages);
         return (
-            <div>
+            <div id="formborder">
                 <div>
                      <h1>Message</h1>
-                     <ul>{messages}</ul>
+                     <div id="container">
+                        <ul>{messages}</ul>
+                     </div>
                      <div
                          className="fb-login-button"
                          data-max-rows="1"
@@ -43,6 +46,7 @@ export class Content extends React.Component {
                         data-theme="dark">
                      </div>
                      <Button />
+                    
                  </div>
             </div>
         );

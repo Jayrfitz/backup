@@ -18,10 +18,14 @@ def hello():
 
 @socketio.on('connect')
 def on_connect():
+    # socketio.emit('add user', {
+    #     'messages': all_mah_message
+    # })
     print 'Someone connected!'
 
 @socketio.on('disconnect')
 def on_disconnect():
+    
     print 'Someone disconnected!'
     
 all_mah_message = []
