@@ -19,6 +19,7 @@ body
 {
     max-width: 1000px;
     min-width: 600px;
+    background-image:  url("https://mdn.mozillademos.org/files/7693/catfront.png")
 }
 input[type=submit] 
 {
