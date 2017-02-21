@@ -13077,6 +13077,7 @@ var Content = exports.Content = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this, props));
 
         _this.state = { 'messages': [] };
+        _this.state = { 'userlist': [] };
 
         return _this;
     }
@@ -13091,6 +13092,11 @@ var Content = exports.Content = function (_React$Component) {
                     'messages': data['messages']
                 });
             });
+            _Socket.Socket.on('userlist', function (data) {
+                _this2.setState({
+                    'userlist': data['userlist']
+                });
+            });
         }
     }, {
         key: 'signOut',
@@ -13101,17 +13107,33 @@ var Content = exports.Content = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var messages = this.state.messages.map(function (n, index) {
-                return React.createElement(
-                    'li',
-                    { key: index },
-                    React.createElement('img', { src: n.picture }),
-                    n.name,
-                    ': ',
-                    n.message
-                );
-            });
-            console.log(messages);
+            var messages = '';
+            var userlist = '';
+            if (this.state.messages != null) {
+                messages = this.state.messages.map(function (n, index) {
+                    return React.createElement(
+                        'li',
+                        { key: index },
+                        React.createElement('img', { src: n.picture }),
+                        n.name,
+                        ': ',
+                        n.message
+                    );
+                });
+            }
+            if (this.state.userlist != null) {
+                console.log("############@#@$@$@$");
+                userlist = this.state.userlist.map(function (n, index) {
+                    return React.createElement(
+                        'li',
+                        { key: index },
+                        React.createElement('img', { src: n.picture }),
+                        n.name
+                    );
+                });
+                console.log(userlist);
+            }
+            // console.log(messages);
             return React.createElement(
                 'div',
                 { id: 'formborder' },
@@ -13127,12 +13149,31 @@ var Content = exports.Content = function (_React$Component) {
                         'div',
                         null,
                         React.createElement(
+                            'h3',
+                            null,
+                            'chat'
+                        ),
+                        React.createElement(
                             'div',
                             { className: 'scroll' },
                             React.createElement(
                                 'ul',
                                 null,
                                 messages
+                            )
+                        ),
+                        React.createElement(
+                            'h3',
+                            null,
+                            'users'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'scroll' },
+                            React.createElement(
+                                'ul',
+                                null,
+                                userlist
                             )
                         )
                     ),

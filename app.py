@@ -1,9 +1,9 @@
 import os
-import flask
+import flask 
 import flask_socketio
 import requests
 import flask_sqlalchemy
-
+from flask import Flask, request
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
@@ -15,17 +15,13 @@ db = flask_sqlalchemy.SQLAlchemy(app)
 def hello():
     return flask.render_template('index.html')
     
-
+user = ''
+disconnect = ''
 @socketio.on('connect')
 def on_connect():
-    # socketio.emit('add user', {
-    #     'messages': all_mah_message
-    # })
-    # all_mah_message.append({
-    #         'name': "Chat Bot",
-    #         'picture': "static/bot.jpg",
-    #         'message': "Hello this is a chatroom don't end up on To Catch a predator",
-    #     })
+    global user
+    user = request.sid
+    print user
     print 'Someone connected!'
 
 @socketio.on('disconnect')
@@ -42,7 +38,8 @@ all_mah_message = []
 @socketio.on('new message')
 def on_new_message(data):
 # ###########################################################################
-# facebook request   
+# facebook request 
+    global user
     if data['google_user_token']== '':
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
         + data['facebook_user_token'])
@@ -55,6 +52,8 @@ def on_new_message(data):
             'name': json['name'],
             'picture': json['picture']['data']['url'],
             'message': data['message'],
+            'user': user,
+            
         })
 # ###########################################################################
 # google request   
@@ -67,9 +66,11 @@ def on_new_message(data):
         # print "Got an event for new message with data:", data
         # all_mah_message.append(data['message'])
         all_mah_message.append({
+            
             'name': json['name'],
             'picture': json['picture'],
             'message': data['message'],
+            'user': user,
         })
         
 # ###########################################################################
@@ -140,6 +141,10 @@ def on_new_message(data):
     socketio.emit('all messages', {
         'messages': all_mah_message
     })
+    print all_mah_message
+    socketio.emit('userlist', {
+        'userlist': all_mah_message
+        })
 if __name__ == '__main__':
     socketio.run(
         app,

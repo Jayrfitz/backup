@@ -8,6 +8,7 @@ export class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {'messages': []};
+        this.state = {'userlist': []};
         
     }
     
@@ -15,6 +16,11 @@ export class Content extends React.Component {
         Socket.on('all messages', (data) => {
             this.setState({
                 'messages': data['messages']
+            });
+        });
+        Socket.on('userlist', (data) => {
+            this.setState({
+                'userlist': data['userlist']
             });
         });
     }
@@ -25,22 +31,43 @@ export class Content extends React.Component {
     
     
     render() {
-        let messages = this.state.messages.map((n, index) => 
-            <li key={index}>
-                <img src={n.picture} />
-                {n.name}: {n.message}
-            </li>
-         );
-        console.log(messages);
+        let messages = '';
+        let userlist =  '';
+        if (this.state.messages != null) { 
+            messages = this.state.messages.map((n, index) => 
+                <li key={index}>
+                    <img src={n.picture} />
+                    {n.name}: {n.message}
+                </li>
+             );
+        }
+        if (this.state.userlist != null) { 
+            console.log("############@#@$@$@$");
+            userlist = this.state.userlist.map((n, index) => 
+                <li key={index}>
+                    <img src={n.picture} />
+                    {n.name}
+                </li>
+             );
+            console.log(userlist);
+
+        }
+        // console.log(messages);
         return (
             <div id="formborder">
                 <div>
                      <h1>Message</h1>
                      <div>
+                        <h3>chat</h3>
                          <div className="scroll"> 
                             <ul>{messages}</ul>
                          </div>
+                         <h3>users</h3>
+                         <div className="scroll"> 
+                            <ul>{userlist}</ul>
+                         </div>
                      </div>
+                     
                      <div
                          className="fb-login-button"
                          data-max-rows="1"
