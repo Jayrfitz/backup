@@ -13154,7 +13154,12 @@ var Content = exports.Content = function (_React$Component) {
                             'G Sign out'
                         )
                     ),
-                    React.createElement(_Button.Button, null)
+                    React.createElement(_Button.Button, null),
+                    React.createElement(
+                        'p',
+                        null,
+                        '\'!! about\' for directions'
+                    )
                 )
             );
         }
@@ -13247,7 +13252,7 @@ var Button = exports.Button = function (_React$Component) {
                 React.createElement(
                     'form',
                     { onSubmit: this.handleSubmit },
-                    React.createElement('textarea', { ref: 'text' }),
+                    React.createElement('textarea', { ref: 'text', rows: '2', cols: '50' }),
                     React.createElement(
                         'button',
                         { onClick: this.handleSubmit.bind(this) },

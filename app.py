@@ -49,7 +49,7 @@ def on_new_message(data):
         json = response.json()
         
         
-        print "Got an event for new message with data:", data
+        # print "Got an event for new message with data:", data
         # all_mah_message.append(data['message'])
         all_mah_message.append({
             'name': json['name'],
@@ -64,7 +64,7 @@ def on_new_message(data):
         json = response.json()
         
         
-        print "Got an event for new message with data:", data
+        # print "Got an event for new message with data:", data
         # all_mah_message.append(data['message'])
         all_mah_message.append({
             'name': json['name'],
@@ -74,26 +74,62 @@ def on_new_message(data):
         
 # ###########################################################################
 # chat bot
-        
-    if "!! about" in data['message']:
-        print "Bot says what"
-        all_mah_message.append({
+    if "!! " in data['message']:
+        if "!! about" in data['message']:
+            print "Bot says what"
+            all_mah_message.append({
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "Whats up dude im chatbot and you are chatting, whats up with that?"
+                "Commands are !! help,!! sing,!! joke,!! say <something>",
+            })
+        elif "!! help" in data['message']:
+            print "Bot says what"
+            all_mah_message.append({
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "Help\n"
+                "You can login to Facebook\n"
+                "You can login to Gmail\n"
+                "Then you can send messages\n"
+                "I wish i could tell you more\n",
+            })
+            
+        elif "!! sing" in data['message']:
+            print "Bot says what"
+            all_mah_message.append({
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "I am not your robot, I am not a clone. "
+                "You are not my puppeteer and I am not a drone. "
+                "Got a new master and I follow Him alone. "
+                "I want a good life till I'm gone. ",
+            })
+          
+        elif "!! joke" in data['message']:
+                print "Bot says what"
+                all_mah_message.append({
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "If the robot does the robot, is it just dancing?",
+            })
+            
+        elif "!! say <" in data['message']:
+            print "Bot says what"
+            data['message'] = data['message'].replace("!! say <", "")
+            data['message'] = data['message'].replace(">", "")
+            all_mah_message.append({
             'name': "Chat Bot",
             'picture': "static/bot.jpg",
-            'message': "Whats up dude im chatbot and you are chatting, whats up with that?",
-        })
-    if "!! help" in data['message']:
-        print "Bot says what"
-        all_mah_message.append({
+            'message': data['message'],
+            })
+        else:
+            print "Bot says what"
+            all_mah_message.append({
             'name': "Chat Bot",
             'picture': "static/bot.jpg",
-            'message': "Help\n"
-            "You can login to Facebook\n"
-            "You can login to Gmail\n"
-            "Then you can send messages\n"
-            "I wish i could tell you more\n",
-        })
-      
+            'message': "not a command",
+            })
       
       
     

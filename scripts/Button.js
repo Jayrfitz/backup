@@ -37,7 +37,7 @@ export class Button extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <textarea ref="text"></textarea>
+                    <textarea ref="text" rows="2" cols="50"></textarea>
                     <button onClick={this.handleSubmit.bind(this)}>Send!</button>
                 </form>
             </div>

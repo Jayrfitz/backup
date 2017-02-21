@@ -56,7 +56,7 @@ export class Content extends React.Component {
                         <a href="#" onClick={this.signOut.bind(this)}>G Sign out</a>
                      </div>
                      <Button />
-                    
+                     <p>'!! about' for directions</p>
                  </div>
             </div>
         );
