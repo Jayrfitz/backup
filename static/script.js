@@ -13093,6 +13093,12 @@ var Content = exports.Content = function (_React$Component) {
             });
         }
     }, {
+        key: 'signOut',
+        value: function signOut(event) {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var messages = this.state.messages.map(function (n, index) {
@@ -13135,6 +13141,15 @@ var Content = exports.Content = function (_React$Component) {
                     React.createElement('div', {
                         className: 'g-signin2',
                         'data-theme': 'dark' }),
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement(
+                            'a',
+                            { href: '#', onClick: this.signOut.bind(this) },
+                            'Sign out'
+                        )
+                    ),
                     React.createElement(_Button.Button, null)
                 )
             );
@@ -13143,6 +13158,7 @@ var Content = exports.Content = function (_React$Component) {
 
     return Content;
 }(React.Component);
+// <a href="#" onclick="signOut();">Sign out</a>
 
 /***/ }),
 /* 108 */

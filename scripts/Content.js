@@ -18,6 +18,10 @@ export class Content extends React.Component {
             });
         });
     }
+    signOut(event) {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut();
+    }
     
     render() {
         let messages = this.state.messages.map((n, index) => 
@@ -45,6 +49,9 @@ export class Content extends React.Component {
                         className="g-signin2"
                         data-theme="dark">
                      </div>
+                     <div>
+                        <a href="#" onClick={this.signOut.bind(this)}>Sign out</a>
+                     </div>
                      <Button />
                     
                  </div>
@@ -52,3 +59,4 @@ export class Content extends React.Component {
         );
     }
 }
+// <a href="#" onclick="signOut();">Sign out</a>
