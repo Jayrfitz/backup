@@ -41,7 +41,8 @@ all_mah_message = []
 
 @socketio.on('new message')
 def on_new_message(data):
-    
+# ###########################################################################
+# facebook request   
     if data['google_user_token']== '':
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
         + data['facebook_user_token'])
@@ -55,7 +56,8 @@ def on_new_message(data):
             'picture': json['picture']['data']['url'],
             'message': data['message'],
         })
-    
+# ###########################################################################
+# google request   
     elif data['facebook_user_token']== '':
         response = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
         + data['google_user_token'])
@@ -69,6 +71,9 @@ def on_new_message(data):
             'picture': json['picture'],
             'message': data['message'],
         })
+        
+# ###########################################################################
+# chat bot
         
     if "!! about" in data['message']:
         print "Bot says what"
@@ -88,6 +93,11 @@ def on_new_message(data):
             "Then you can send messages\n"
             "I wish i could tell you more\n",
         })
+      
+      
+      
+      
+      
         
     # #message = models.Message(all_mah_message)
     # #models.db.session.add(message)

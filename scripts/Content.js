@@ -23,6 +23,7 @@ export class Content extends React.Component {
         auth2.signOut();
     }
     
+    
     render() {
         let messages = this.state.messages.map((n, index) => 
             <li key={index}>
