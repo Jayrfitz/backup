@@ -13125,11 +13125,15 @@ var Content = exports.Content = function (_React$Component) {
                     ),
                     React.createElement(
                         'div',
-                        { id: 'container' },
+                        null,
                         React.createElement(
-                            'ul',
-                            null,
-                            messages
+                            'div',
+                            { className: 'scroll' },
+                            React.createElement(
+                                'ul',
+                                null,
+                                messages
+                            )
                         )
                     ),
                     React.createElement('div', {
@@ -13158,7 +13162,6 @@ var Content = exports.Content = function (_React$Component) {
 
     return Content;
 }(React.Component);
-// <a href="#" onclick="signOut();">Sign out</a>
 
 /***/ }),
 /* 108 */

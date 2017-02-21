@@ -1,6 +1,11 @@
-# lecture8-thuhe
+# Project2_h1
 
-Styling our React code
+## Chat room with Facebook and google authorization 
+
+The appilcation is a real-time chat app in the browser, like Google Hangouts, 
+Facebook Messenger, or Slack. The User will be able to authenticate who they
+are on the chat client by opening the facebook or google login dialogue. 
+
 
 ## Upgrade Node version to 6
 

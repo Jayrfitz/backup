@@ -21,11 +21,20 @@ def on_connect():
     # socketio.emit('add user', {
     #     'messages': all_mah_message
     # })
+    # all_mah_message.append({
+    #         'name': "Chat Bot",
+    #         'picture': "static/bot.jpg",
+    #         'message': "Hello this is a chatroom don't end up on To Catch a predator",
+    #     })
     print 'Someone connected!'
 
 @socketio.on('disconnect')
 def on_disconnect():
-    
+    # all_mah_message.append({
+    #         'name': "Chat Bot",
+    #         'picture': "static/bot.jpg",
+    #         'message': "Bye",
+    #     })
     print 'Someone disconnected!'
     
 all_mah_message = []
@@ -60,8 +69,26 @@ def on_new_message(data):
             'picture': json['picture'],
             'message': data['message'],
         })
-    
-    
+        
+    if "!! about" in data['message']:
+        print "Bot says what"
+        all_mah_message.append({
+            'name': "Chat Bot",
+            'picture': "static/bot.jpg",
+            'message': "Whats up dude im chatbot and you are chatting, whats up with that?",
+        })
+    if "!! help" in data['message']:
+        print "Bot says what"
+        all_mah_message.append({
+            'name': "Chat Bot",
+            'picture': "static/bot.jpg",
+            'message': "Help\n"
+            "You can login to Facebook\n"
+            "You can login to Gmail\n"
+            "Then you can send messages\n"
+            "I wish i could tell you more\n",
+        })
+        
     # #message = models.Message(all_mah_message)
     # #models.db.session.add(message)
     # #all_mah_message.append(models.Message.query.all())

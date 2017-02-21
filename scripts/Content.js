@@ -35,8 +35,10 @@ export class Content extends React.Component {
             <div id="formborder">
                 <div>
                      <h1>Message</h1>
-                     <div id="container">
-                        <ul>{messages}</ul>
+                     <div>
+                         <div className="scroll"> 
+                            <ul>{messages}</ul>
+                         </div>
                      </div>
                      <div
                          className="fb-login-button"
@@ -59,4 +61,3 @@ export class Content extends React.Component {
         );
     }
 }
-// <a href="#" onclick="signOut();">Sign out</a>
