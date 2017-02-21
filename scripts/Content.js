@@ -50,7 +50,7 @@ export class Content extends React.Component {
                         data-theme="dark">
                      </div>
                      <div>
-                        <a href="#" onClick={this.signOut.bind(this)}>Sign out</a>
+                        <a href="#" onClick={this.signOut.bind(this)}>G Sign out</a>
                      </div>
                      <Button />
                     

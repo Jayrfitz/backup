@@ -13147,7 +13147,7 @@ var Content = exports.Content = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '#', onClick: this.signOut.bind(this) },
-                            'Sign out'
+                            'G Sign out'
                         )
                     ),
                     React.createElement(_Button.Button, null)
