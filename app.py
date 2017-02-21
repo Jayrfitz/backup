@@ -96,9 +96,7 @@ def on_new_message(data):
       
       
       
-      
-      
-        
+    
     # #message = models.Message(all_mah_message)
     # #models.db.session.add(message)
     # #all_mah_message.append(models.Message.query.all())
