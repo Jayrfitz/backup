@@ -1,5 +1,7 @@
 # models.py
-import flask_sqlalchemy, app, os
+import flask_sqlalchemy, 
+import app
+import os
 
 # app.app = app module's app variable
 #app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
