@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Button } from './Button';
 import { Socket } from './Socket';
-// import { UserList } from './UserList';
+
 
 export class Content extends React.Component {
     constructor(props) {
