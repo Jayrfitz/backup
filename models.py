@@ -5,7 +5,7 @@ import os
 
 # app.app = app module's app variable
 #app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
-app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('HEROKU_POSTGRESQL_BLACK_URL')
 
 db = flask_sqlalchemy.SQLAlchemy(app.app)
 

@@ -2,3 +2,4 @@ Flask
 flask-socketio
 requests
 flask_sqlalchemy
+psycopg2

@@ -11,7 +11,7 @@ socketio = flask_socketio.SocketIO(app)
 import models
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
 app.app.config['SQLALCHEMY_DATABASE_URI'] = \
- os.getenv('DATABASE_URL')
+ os.getenv('HEROKU_POSTGRESQL_BLACK_URL')
 db = flask_sqlalchemy.SQLAlchemy(app)
 
 @app.route('/')
