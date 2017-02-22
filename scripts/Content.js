@@ -23,6 +23,12 @@ export class Content extends React.Component {
                 'userlist': data['userlist']
             });
         });
+        Socket.on('remove', (data) => {
+            var temp = data['remove'];
+            this.setState({
+                'name': temp.name
+            });
+        });
     }
     signOut(event) {
         var auth2 = gapi.auth2.getAuthInstance();
@@ -32,7 +38,8 @@ export class Content extends React.Component {
     
     render() {
         let messages = '';
-        let userlist =  '';
+        let userlist = '';
+        let userNum  = '';
         if (this.state.messages != null) { 
             messages = this.state.messages.map((n, index) => 
                 <li key={index}>
@@ -42,13 +49,14 @@ export class Content extends React.Component {
              );
         }
         if (this.state.userlist != null) { 
-            console.log("############@#@$@$@$");
+            
             userlist = this.state.userlist.map((n, index) => 
                 <li key={index}>
                     <img src={n.picture} />
                     {n.name}
                 </li>
              );
+            userNum=this.state.userlist.length;
             console.log(userlist);
 
         }
@@ -62,7 +70,10 @@ export class Content extends React.Component {
                          <div className="scroll"> 
                             <ul>{messages}</ul>
                          </div>
-                         <h3>users</h3>
+                         <div> 
+                            <h3>users<ul>{userNum}</ul></h3>
+                         </div>
+                         
                          <div className="scroll"> 
                             <ul>{userlist}</ul>
                          </div>
@@ -83,7 +94,8 @@ export class Content extends React.Component {
                         <a href="#" onClick={this.signOut.bind(this)}>G Sign out</a>
                      </div>
                      <Button />
-                     <p>'!! about' for directions</p>
+                     <p>type '!! about' for directions extra commands '!! sing', '!! joke' more 
+                     is specified in about command</p>
                  </div>
             </div>
         );

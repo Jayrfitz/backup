@@ -26,14 +26,24 @@ def on_connect():
 
 @socketio.on('disconnect')
 def on_disconnect():
-    # all_mah_message.append({
-    #         'name': "Chat Bot",
-    #         'picture': "static/bot.jpg",
-    #         'message': "Bye",
-    #     })
+    global user
+    temp = ""
+    for k in user:
+        print k
+        if(request.sid == k['user_id']):
+            temp = user.pop(user.index(k))
+            user.remove(k)
+    print temp
+    socketio.emit('userlist', {
+        'userlist': user
+        })
+    socketio.emit('remove', {
+        'remove': temp
+        })
     print 'Someone disconnected!'
     
 all_mah_message = []
+all_mah_user = []
 
 @socketio.on('new message')
 def on_new_message(data):
@@ -41,6 +51,7 @@ def on_new_message(data):
 # facebook request 
     global user
     if data['google_user_token']== '':
+        isTrue = False 
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
         + data['facebook_user_token'])
         json = response.json()
@@ -52,12 +63,24 @@ def on_new_message(data):
             'name': json['name'],
             'picture': json['picture']['data']['url'],
             'message': data['message'],
-            'user': user,
-            
         })
+        for k in all_mah_user:
+           if(json['name'] == k['name']):
+               isTrue = True
+              
+             
+        if not isTrue:        
+            all_mah_user.append({
+            'name': json['name'],
+            'picture': json['picture']['data']['url'],
+            'user': user,
+            })
+        
+        
 # ###########################################################################
 # google request   
     elif data['facebook_user_token']== '':
+        isTrue = False 
         response = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
         + data['google_user_token'])
         json = response.json()
@@ -65,13 +88,25 @@ def on_new_message(data):
         
         # print "Got an event for new message with data:", data
         # all_mah_message.append(data['message'])
+        for k in all_mah_user:
+           if(json['name'] == k['name']):
+               isTrue = True
+              
+             
+        if not isTrue:        
+            all_mah_user.append({
+            'name': json['name'],
+            'picture': json['picture'],
+            'user': user,
+            })
         all_mah_message.append({
             
             'name': json['name'],
             'picture': json['picture'],
             'message': data['message'],
-            'user': user,
         })
+        
+        
         
 # ###########################################################################
 # chat bot
@@ -142,8 +177,9 @@ def on_new_message(data):
         'messages': all_mah_message
     })
     print all_mah_message
+    print all_mah_user
     socketio.emit('userlist', {
-        'userlist': all_mah_message
+        'userlist': all_mah_user
         })
 if __name__ == '__main__':
     socketio.run(

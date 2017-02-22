@@ -13097,6 +13097,12 @@ var Content = exports.Content = function (_React$Component) {
                     'userlist': data['userlist']
                 });
             });
+            _Socket.Socket.on('remove', function (data) {
+                var temp = data['remove'];
+                _this2.setState({
+                    'name': temp.name
+                });
+            });
         }
     }, {
         key: 'signOut',
@@ -13109,6 +13115,7 @@ var Content = exports.Content = function (_React$Component) {
         value: function render() {
             var messages = '';
             var userlist = '';
+            var userNum = '';
             if (this.state.messages != null) {
                 messages = this.state.messages.map(function (n, index) {
                     return React.createElement(
@@ -13122,7 +13129,7 @@ var Content = exports.Content = function (_React$Component) {
                 });
             }
             if (this.state.userlist != null) {
-                console.log("############@#@$@$@$");
+
                 userlist = this.state.userlist.map(function (n, index) {
                     return React.createElement(
                         'li',
@@ -13131,6 +13138,7 @@ var Content = exports.Content = function (_React$Component) {
                         n.name
                     );
                 });
+                userNum = this.state.userlist.length;
                 console.log(userlist);
             }
             // console.log(messages);
@@ -13163,9 +13171,18 @@ var Content = exports.Content = function (_React$Component) {
                             )
                         ),
                         React.createElement(
-                            'h3',
+                            'div',
                             null,
-                            'users'
+                            React.createElement(
+                                'h3',
+                                null,
+                                'users',
+                                React.createElement(
+                                    'ul',
+                                    null,
+                                    userNum
+                                )
+                            )
                         ),
                         React.createElement(
                             'div',
@@ -13199,7 +13216,7 @@ var Content = exports.Content = function (_React$Component) {
                     React.createElement(
                         'p',
                         null,
-                        '\'!! about\' for directions'
+                        'type \'!! about\' for directions extra commands \'!! sing\', \'!! joke\' more is specified in about command'
                     )
                 )
             );
