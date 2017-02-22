@@ -13,4 +13,15 @@ user name and profile picture.
 
 ## Problems
 
-## 
+Heroku didnt like psql with the my python code i was getting a interal server 
+error. 
+
+Bot also write to all the clients when someone logs in or logs out.
+
+The google login for the user list can be buggy sometimes.
+
+## improvements
+
+I would like to get the psql to work again.
+
+Also the logouts to update the userlist.
