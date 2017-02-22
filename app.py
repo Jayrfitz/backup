@@ -26,20 +26,20 @@ def on_connect():
 
 @socketio.on('disconnect')
 def on_disconnect():
-    global user
-    temp = ""
-    for k in user:
-        print k
-        if(request.sid == k['user_id']):
-            temp = user.pop(user.index(k))
-            user.remove(k)
-    print temp
-    socketio.emit('userlist', {
-        'userlist': user
-        })
-    socketio.emit('remove', {
-        'remove': temp
-        })
+    # global user
+    # temp = ""
+    # for k in user:
+    #     print k
+    #     if(request.sid == k['user_id']):
+    #         temp = user.pop(user.index(k))
+    #         user.remove(k)
+    # print temp
+    # socketio.emit('userlist', {
+    #     'userlist': user
+    #     })
+    # socketio.emit('remove', {
+    #     'remove': temp
+    #     })
     print 'Someone disconnected!'
     
 all_mah_message = []
