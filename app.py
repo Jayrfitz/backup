@@ -9,7 +9,9 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 import models
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
+app.app.config['SQLALCHEMY_DATABASE_URI'] = \
+ os.getenv('DATABASE_URL')
 db = flask_sqlalchemy.SQLAlchemy(app)
 
 @app.route('/')
@@ -54,6 +56,7 @@ def getmessages():
         message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
         all_mah_message.append(message)
     return all_mah_message
+
 def commitMessage(message):
     all_mah_message.append(message)
     message = models.Message(message['name'],message['picture'],message['message'])
