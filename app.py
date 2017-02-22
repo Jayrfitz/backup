@@ -3,13 +3,13 @@ import flask
 import flask_socketio
 import requests
 import flask_sqlalchemy
+import json
 from flask import Flask, request
+
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 import models
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
-db = flask_sqlalchemy.SQLAlchemy(app)
 
 @app.route('/')
 def hello():
@@ -26,44 +26,62 @@ def on_connect():
 
 @socketio.on('disconnect')
 def on_disconnect():
-    # global user
-    # temp = ""
-    # for k in user:
-    #     print k
-    #     if(request.sid == k['user_id']):
-    #         temp = user.pop(user.index(k))
-    #         user.remove(k)
-    # print temp
-    # socketio.emit('userlist', {
-    #     'userlist': user
-    #     })
-    # socketio.emit('remove', {
-    #     'remove': temp
-    #     })
+    global user
     print 'Someone disconnected!'
     
 all_mah_message = []
 all_mah_user = []
 
+
+def getmessages():
+    messageQuery = models.Message.query.all()
+    all_mah_message = []
+    for i in range (0, len(messageQuery)):
+        message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
+        all_mah_message.append(message)
+    return all_mah_message
+
+def commitMessage(message):
+    all_mah_message.append(message)
+    message = models.Message(message['name'],message['picture'],message['message'])
+    models.db.session.add(message)  
+    models.db.session.commit()
+    
 @socketio.on('new message')
 def on_new_message(data):
 # ###########################################################################
 # facebook request 
+    
     global user
     if data['google_user_token']== '':
         isTrue = False 
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
         + data['facebook_user_token'])
         json = response.json()
-        
-        
-        # print "Got an event for new message with data:", data
-        # all_mah_message.append(data['message'])
-        all_mah_message.append({
+        message = {
             'name': json['name'],
             'picture': json['picture']['data']['url'],
             'message': data['message'],
-        })
+        }
+        
+        # print "Got an event for new message with data:", data
+        # all_mah_message.append(data['message'])
+        all_mah_message = getmessages()
+        # messageQuery = models.Message.query.all()
+        # all_mah_message = []
+        # for i in range (0, len(messageQuery)):
+        #     message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
+        #     all_mah_message.append(json.dumps(message))
+        commitMessage(message)
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture']['data']['url'],
+        #     'message': data['message'],
+        # })
+         
+
+        
+        
         for k in all_mah_user:
            if(json['name'] == k['name']):
                isTrue = True
@@ -85,9 +103,23 @@ def on_new_message(data):
         + data['google_user_token'])
         json = response.json()
         
-        
+        message = {
+            'name': json['name'],
+            'picture': json['picture'],
+            'message': data['message'],
+        }
         # print "Got an event for new message with data:", data
         # all_mah_message.append(data['message'])
+        
+        all_mah_message = getmessages()
+        commitMessage(message)
+        
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture'],
+        #     'message': data['message'],
+        # })
+        
         for k in all_mah_user:
            if(json['name'] == k['name']):
                isTrue = True
@@ -99,12 +131,7 @@ def on_new_message(data):
             'picture': json['picture'],
             'user': user,
             })
-        all_mah_message.append({
-            
-            'name': json['name'],
-            'picture': json['picture'],
-            'message': data['message'],
-        })
+        
         
         
         
@@ -169,9 +196,7 @@ def on_new_message(data):
       
       
     
-    # #message = models.Message(all_mah_message)
-    # #models.db.session.add(message)
-    # #all_mah_message.append(models.Message.query.all())
+
     
     socketio.emit('all messages', {
         'messages': all_mah_message
