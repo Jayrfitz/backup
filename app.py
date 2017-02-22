@@ -27,19 +27,6 @@ def on_connect():
 @socketio.on('disconnect')
 def on_disconnect():
     global user
-    # temp = ""
-    # for k in user:
-    #     print k
-    #     if(request.sid == k['user_id']):
-    #         temp = user.pop(user.index(k))
-    #         user.remove(k)
-    # print temp
-    # socketio.emit('userlist', {
-    #     'userlist': user
-    #     })
-    # socketio.emit('remove', {
-    #     'remove': temp
-    #     })
     print 'Someone disconnected!'
     
 all_mah_message = []
@@ -86,11 +73,11 @@ def on_new_message(data):
         #     message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
         #     all_mah_message.append(json.dumps(message))
         commitMessage(message)
-        all_mah_message.append({
-            'name': json['name'],
-            'picture': json['picture']['data']['url'],
-            'message': data['message'],
-        })
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture']['data']['url'],
+        #     'message': data['message'],
+        # })
          
 
         
@@ -127,11 +114,11 @@ def on_new_message(data):
         all_mah_message = getmessages()
         commitMessage(message)
         
-        all_mah_message.append({
-            'name': json['name'],
-            'picture': json['picture'],
-            'message': data['message'],
-        })
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture'],
+        #     'message': data['message'],
+        # })
         
         for k in all_mah_user:
            if(json['name'] == k['name']):
