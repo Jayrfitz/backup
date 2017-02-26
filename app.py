@@ -47,96 +47,7 @@ def commitMessage(message):
     models.db.session.add(message)  
     models.db.session.commit()
     
-@socketio.on('new message')
-def on_new_message(data):
-# ###########################################################################
-# facebook request 
-    
-    global user
-    if data['google_user_token']== '':
-        isTrue = False 
-        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
-        + data['facebook_user_token'])
-        json = response.json()
-        message = {
-            'name': json['name'],
-            'picture': json['picture']['data']['url'],
-            'message': data['message'],
-        }
-        
-        # print "Got an event for new message with data:", data
-        # all_mah_message.append(data['message'])
-        all_mah_message = getmessages()
-        # messageQuery = models.Message.query.all()
-        # all_mah_message = []
-        # for i in range (0, len(messageQuery)):
-        #     message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
-        #     all_mah_message.append(json.dumps(message))
-        commitMessage(message)
-        # all_mah_message.append({
-        #     'name': json['name'],
-        #     'picture': json['picture']['data']['url'],
-        #     'message': data['message'],
-        # })
-         
-
-        
-        
-        for k in all_mah_user:
-           if(json['name'] == k['name']):
-               isTrue = True
-              
-             
-        if not isTrue:        
-            all_mah_user.append({
-            'name': json['name'],
-            'picture': json['picture']['data']['url'],
-            'user': user,
-            })
-        
-        
-# ###########################################################################
-# google request   
-    elif data['facebook_user_token']== '':
-        isTrue = False 
-        response = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
-        + data['google_user_token'])
-        json = response.json()
-        
-        message = {
-            'name': json['name'],
-            'picture': json['picture'],
-            'message': data['message'],
-        }
-        # print "Got an event for new message with data:", data
-        # all_mah_message.append(data['message'])
-        
-        all_mah_message = getmessages()
-        commitMessage(message)
-        
-        # all_mah_message.append({
-        #     'name': json['name'],
-        #     'picture': json['picture'],
-        #     'message': data['message'],
-        # })
-        
-        for k in all_mah_user:
-           if(json['name'] == k['name']):
-               isTrue = True
-              
-             
-        if not isTrue:        
-            all_mah_user.append({
-            'name': json['name'],
-            'picture': json['picture'],
-            'user': user,
-            })
-        
-        
-        
-        
-# ###########################################################################
-# chat bot
+def chatbot(all_mah_message):
     if "!! " in data['message']:
         if "!! about" in data['message']:
             print "Bot says what"
@@ -193,7 +104,101 @@ def on_new_message(data):
             'picture': "static/bot.jpg",
             'message': "not a command",
             })
-      
+    
+    
+@socketio.on('new message')
+def on_new_message(data):
+# ###########################################################################
+# facebook request 
+    
+    global user
+    if data['google_user_token']== '':
+        isTrue = False 
+        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='
+        + data['facebook_user_token'])
+        json = response.json()
+        message = {
+            'name': json['name'],
+            'picture': json['picture']['data']['url'],
+            'message': data['message'],
+        }
+        
+        # print "Got an event for new message with data:", data
+        # all_mah_message.append(data['message'])
+        all_mah_message = getmessages()
+        # messageQuery = models.Message.query.all()
+        # all_mah_message = []
+        # for i in range (0, len(messageQuery)):
+        #     message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
+        #     all_mah_message.append(json.dumps(message))
+        chatbot(all_mah_message)
+        commitMessage(message)
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture']['data']['url'],
+        #     'message': data['message'],
+        # })
+         
+
+        
+        
+        for k in all_mah_user:
+           if(json['name'] == k['name']):
+               isTrue = True
+              
+             
+        if not isTrue:        
+            all_mah_user.append({
+            'name': json['name'],
+            'picture': json['picture']['data']['url'],
+            'user': user,
+            })
+        
+        
+# ###########################################################################
+# google request   
+    elif data['facebook_user_token']== '':
+        isTrue = False 
+        response = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
+        + data['google_user_token'])
+        json = response.json()
+        
+        message = {
+            'name': json['name'],
+            'picture': json['picture'],
+            'message': data['message'],
+        }
+        # print "Got an event for new message with data:", data
+        # all_mah_message.append(data['message'])
+        
+        all_mah_message = getmessages()
+        chatbot(all_mah_message)
+        commitMessage(message)
+        
+        # all_mah_message.append({
+        #     'name': json['name'],
+        #     'picture': json['picture'],
+        #     'message': data['message'],
+        # })
+        
+        for k in all_mah_user:
+           if(json['name'] == k['name']):
+               isTrue = True
+              
+             
+        if not isTrue:        
+            all_mah_user.append({
+            'name': json['name'],
+            'picture': json['picture'],
+            'user': user,
+            })
+        
+        
+        
+        
+# # ###########################################################################
+# # chat bot
+
       
     
 
