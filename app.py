@@ -46,6 +46,19 @@ def commitMessage(message):
     message = models.Message(message['name'],message['picture'],message['message'])
     models.db.session.add(message)  
     models.db.session.commit()
+    
+def botApi(apiCity):
+    print apiCity
+    # response = requests.get('api.openweathermap.org/data/2.5/weather?q='+ apiCity+ '&appid=' + os.environ['KEY'])
+    response = requests.get('http://api.openweathermap.org/data/2.5/weather?q='+ apiCity+ '&appid=5fea858a2b422296f20a8654c22fdd72')
+    json_body = response.json()
+    
+    # print "******jsonWeather******** =", json_body['weather'][0]['description']
+    city = json_body['name']
+    weather = json_body['weather'][0]['description']
+    api = city + ' weather description: '+ weather
+    # json_body["images"][random_int]["display_sizes"][0]["uri"]
+    return api
         
 # # ###########################################################################
 # # chat bot    
@@ -98,6 +111,16 @@ def chatbot(data, all_mah_message):
                 'name': "Chat Bot",
                 'picture': "static/bot.jpg",
                 'message': data['message'],
+            }
+        elif "!! weather " in data['message']:
+            print "Bot says what"
+            data['message'] = data['message'].replace("!! weather ", "")
+            apiCity = data['message']
+            weather = botApi(apiCity)
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': weather,
             }
         else:
             print "Bot says what"
