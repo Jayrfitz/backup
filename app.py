@@ -247,10 +247,10 @@ def on_new_message(data):
         print link
         
         
-        
+
         message = {
             'name': json['name'],
-            'picture': json['picture']['data']['url'],
+            'picture': json['picture'],
             'message': data['message'],
             'link': link,
             
