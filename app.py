@@ -32,7 +32,8 @@ def on_disconnect():
 all_mah_message = []
 all_mah_user = []
 
-
+# # ###########################################################################
+# # get messages database
 def getmessages():
     messageQuery = models.Message.query.all()
     all_mah_message = []
@@ -40,16 +41,105 @@ def getmessages():
         message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
         all_mah_message.append(message)
     return all_mah_message
-
+# # ###########################################################################
+# # commit messages to database
 def commitMessage(message):
     all_mah_message.append(message)
     message = models.Message(message['name'],message['picture'],message['message'])
     models.db.session.add(message)  
     models.db.session.commit()
     
+# # ###########################################################################
+# # bot api    
+def botApi(apiCity):
+    print apiCity
+    response = requests.get('http://api.openweathermap.org/data/2.5/weather?q='+ apiCity+ '&appid=' + os.environ['KEY'])
+    json_body = response.json()
+    
+    
+    city = json_body['name']
+    weather = json_body['weather'][0]['description']
+    api = city + ' weather description: '+ weather
+    return api
+        
+# # ###########################################################################
+# # chat bot    
+def chatbot(data, all_mah_message):
+    botmessage = ''
+    if "!! " in data['message']:
+        if "!! about" in data['message']:
+            print "Bot says what"
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "Whats up dude im chatbot and you are chatting, whats up with that?"
+                "Commands are !! help,!! sing,!! joke,!! say <something>",
+            }
+        elif "!! help" in data['message']:
+            print "Bot says what"
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "Help\n"
+                "You can login to Facebook\n"
+                "You can login to Gmail\n"
+                "Then you can send messages\n"
+                "I wish i could tell you more\n",
+            }
+            
+        elif "!! sing" in data['message']:
+            print "Bot says what"
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "I am not your robot, I am not a clone. "
+                "You are not my puppeteer and I am not a drone. "
+                "Got a new master and I follow Him alone. "
+                "I want a good life till I'm gone. ",
+            }
+          
+        elif "!! joke" in data['message']:
+            print "Bot says what"
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "If the robot does the robot, is it just dancing?",
+            }
+            
+        elif "!! say " in data['message']:
+            print "Bot says what"
+            data['message'] = data['message'].replace("!! say ", "")
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': data['message'],
+            }
+        elif "!! weather " in data['message']:
+            print "Bot says what"
+            data['message'] = data['message'].replace("!! weather ", "")
+            apiCity = data['message']
+            weather = botApi(apiCity)
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': weather,
+            }
+        else:
+            print "Bot says what"
+            botmessage = {
+                'name': "Chat Bot",
+                'picture': "static/bot.jpg",
+                'message': "not a command",
+            }
+        commitMessage(botmessage)
+        return(botmessage)
+    else:
+        return(botmessage)
+    
+    
 @socketio.on('new message')
 def on_new_message(data):
-# ###########################################################################
+############################################################################
 # facebook request 
     
     global user
@@ -65,25 +155,19 @@ def on_new_message(data):
         }
         
         # print "Got an event for new message with data:", data
-        # all_mah_message.append(data['message'])
+        
         all_mah_message = getmessages()
-        # messageQuery = models.Message.query.all()
-        # all_mah_message = []
-        # for i in range (0, len(messageQuery)):
-        #     message = { 'message':messageQuery[i].message,'name':messageQuery[i].name,'picture':messageQuery[i].picture}
-        #     all_mah_message.append(json.dumps(message))
+        all_mah_message.append(message)
         commitMessage(message)
-        # all_mah_message.append({
-        #     'name': json['name'],
-        #     'picture': json['picture']['data']['url'],
-        #     'message': data['message'],
-        # })
-         
-
+        botmessage = chatbot(data,all_mah_message)
+        if botmessage != "":
+            all_mah_message.append(botmessage)
+        
+        
         
         
         for k in all_mah_user:
-           if(json['name'] == k['name']):
+           if json['name'] == k['name']:
                isTrue = True
               
              
@@ -95,7 +179,7 @@ def on_new_message(data):
             })
         
         
-# ###########################################################################
+############################################################################
 # google request   
     elif data['facebook_user_token']== '':
         isTrue = False 
@@ -109,19 +193,18 @@ def on_new_message(data):
             'message': data['message'],
         }
         # print "Got an event for new message with data:", data
-        # all_mah_message.append(data['message'])
         
         all_mah_message = getmessages()
+        all_mah_message.append(message)
         commitMessage(message)
+        botmessage = chatbot(data,all_mah_message)
+        if botmessage != "":
+            all_mah_message.append(botmessage)
         
-        # all_mah_message.append({
-        #     'name': json['name'],
-        #     'picture': json['picture'],
-        #     'message': data['message'],
-        # })
+        
         
         for k in all_mah_user:
-           if(json['name'] == k['name']):
+           if json['name'] == k['name']:
                isTrue = True
               
              
@@ -132,77 +215,11 @@ def on_new_message(data):
             'user': user,
             })
         
-        
-        
-        
-# ###########################################################################
-# chat bot
-    if "!! " in data['message']:
-        if "!! about" in data['message']:
-            print "Bot says what"
-            all_mah_message.append({
-                'name': "Chat Bot",
-                'picture': "static/bot.jpg",
-                'message': "Whats up dude im chatbot and you are chatting, whats up with that?"
-                "Commands are !! help,!! sing,!! joke,!! say <something>",
-            })
-        elif "!! help" in data['message']:
-            print "Bot says what"
-            all_mah_message.append({
-                'name': "Chat Bot",
-                'picture': "static/bot.jpg",
-                'message': "Help\n"
-                "You can login to Facebook\n"
-                "You can login to Gmail\n"
-                "Then you can send messages\n"
-                "I wish i could tell you more\n",
-            })
-            
-        elif "!! sing" in data['message']:
-            print "Bot says what"
-            all_mah_message.append({
-                'name': "Chat Bot",
-                'picture': "static/bot.jpg",
-                'message': "I am not your robot, I am not a clone. "
-                "You are not my puppeteer and I am not a drone. "
-                "Got a new master and I follow Him alone. "
-                "I want a good life till I'm gone. ",
-            })
-          
-        elif "!! joke" in data['message']:
-                print "Bot says what"
-                all_mah_message.append({
-                'name': "Chat Bot",
-                'picture': "static/bot.jpg",
-                'message': "If the robot does the robot, is it just dancing?",
-            })
-            
-        elif "!! say <" in data['message']:
-            print "Bot says what"
-            data['message'] = data['message'].replace("!! say <", "")
-            data['message'] = data['message'].replace(">", "")
-            all_mah_message.append({
-            'name': "Chat Bot",
-            'picture': "static/bot.jpg",
-            'message': data['message'],
-            })
-        else:
-            print "Bot says what"
-            all_mah_message.append({
-            'name': "Chat Bot",
-            'picture': "static/bot.jpg",
-            'message': "not a command",
-            })
-      
-      
-    
-
-    
     socketio.emit('all messages', {
         'messages': all_mah_message
     })
-    print all_mah_message
-    print all_mah_user
+    # print all_mah_message
+    # print all_mah_user
     socketio.emit('userlist', {
         'userlist': all_mah_user
         })
