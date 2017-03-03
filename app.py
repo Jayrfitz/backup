@@ -266,7 +266,7 @@ def on_new_message(data):
         
         ##### userlist
         for k in all_mah_user:
-           if json['name'] == k['name']:
+           if json['picture'] == k['picture']:
                isTrue = True
               
              
