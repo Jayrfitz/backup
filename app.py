@@ -61,18 +61,6 @@ def botApi(apiCity):
     city = json_body['name']
     weather = json_body['weather'][0]['description']
     api = city + ' weather description: '+ weather
-
-def botApi(apiCity):
-    print apiCity
-    # response = requests.get('api.openweathermap.org/data/2.5/weather?q='+ apiCity+ '&appid=' + os.environ['KEY'])
-    response = requests.get('http://api.openweathermap.org/data/2.5/weather?q='+ apiCity+ '&appid=5fea858a2b422296f20a8654c22fdd72')
-    json_body = response.json()
-    
-    # print "******jsonWeather******** =", json_body['weather'][0]['description']
-    city = json_body['name']
-    weather = json_body['weather'][0]['description']
-    api = city + ' weather description: '+ weather
-    # json_body["images"][random_int]["display_sizes"][0]["uri"]
     return api
         
 # # ###########################################################################
