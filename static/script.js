@@ -13058,6 +13058,8 @@ var _Button = __webpack_require__(109);
 
 var _Socket = __webpack_require__(66);
 
+var _Message = __webpack_require__(237);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13114,16 +13116,10 @@ var Content = exports.Content = function (_React$Component) {
             var messages = '';
             var userlist = '';
             var userNum = '';
+            console.log(messages);
             if (this.state.messages != null) {
                 messages = this.state.messages.map(function (n, index) {
-                    return React.createElement(
-                        'li',
-                        { key: index },
-                        React.createElement('img', { src: n.picture }),
-                        n.name,
-                        ': ',
-                        n.message
-                    );
+                    return React.createElement(_Message.Message, { key: index, src: n.picture, name: n.name, message: n.message, link: n.link });
                 });
             }
             if (this.state.userlist != null) {
@@ -30310,6 +30306,82 @@ var _Content = __webpack_require__(107);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 ReactDOM.render(React.createElement(_Content.Content, null), document.getElementById('content'));
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Message = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(38);
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Message = exports.Message = function (_React$Component) {
+    _inherits(Message, _React$Component);
+
+    function Message() {
+        _classCallCheck(this, Message);
+
+        return _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).apply(this, arguments));
+    }
+
+    _createClass(Message, [{
+        key: "render",
+        value: function render() {
+            // console.log(this.props.link);
+            var message = void 0;
+            var protoPattern = new RegExp("((ftp|http|https):\/\/)?[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?");
+            var urlPattern = new RegExp("\.(com|edu|gov|org)");
+            var propRes = protoPattern.test(this.props.message);
+            var urlRes = urlPattern.test(this.props.message);
+            if (this.props.link === 'img') {
+                console.log("this is an image in userMessage");
+                message = React.createElement("img", { className: "images", src: this.props.message });
+            } else if (propRes && urlRes) {
+                console.log("this link *****");
+                message = React.createElement(
+                    "a",
+                    { href: this.props.message, target: "_blank" },
+                    this.props.message
+                );
+            } else {
+                message = this.props.message;
+            }
+
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "li",
+                    { key: this.props.key },
+                    React.createElement("img", { src: this.props.src }),
+                    this.props.name,
+                    ": ",
+                    message
+                )
+            );
+        }
+    }]);
+
+    return Message;
+}(React.Component);
 
 /***/ })
 /******/ ]);

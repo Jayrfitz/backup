@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Button } from './Button';
 import { Socket } from './Socket';
+import { Message } from './Message';
 
 
 export class Content extends React.Component {
@@ -30,6 +31,7 @@ export class Content extends React.Component {
             });
         });
     }
+
     signOut(event) {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut();
@@ -40,13 +42,11 @@ export class Content extends React.Component {
         let messages = '';
         let userlist = '';
         let userNum  = '';
-        if (this.state.messages != null) { 
-            messages = this.state.messages.map((n, index) => 
-                <li key={index}>
-                    <img src={n.picture} />
-                    {n.name}: {n.message}
-                </li>
-             );
+        console.log(messages);
+        if (this.state.messages != null) {
+            messages = this.state.messages.map((n, index) => {
+                return <Message key={index} src={n.picture} name={n.name} message={n.message} link={n.link} />;
+             });
         }
         if (this.state.userlist != null) { 
             

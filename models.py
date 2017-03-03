@@ -3,9 +3,15 @@ import flask_sqlalchemy
 import app
 import os
 
-app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-# app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
+# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
+# # db = flask_sqlalchemy.SQLAlchemy(app)
 
+# # app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://surf:password@localhost/postgres'
+
+# db = flask_sqlalchemy.SQLAlchemy(app.app)
+app.app.config['SQLALCHEMY_DATABASE_URI'] = \
+'postgresql://potato:potatosareawesome@localhost/postgres'
 db = flask_sqlalchemy.SQLAlchemy(app.app)
 
 class Message(db.Model):
@@ -13,12 +19,14 @@ class Message(db.Model):
     message = db.Column(db.String(200))
     name    = db.Column(db.String(200))
     picture = db.Column(db.String(200))
+    link = db.Column(db.String(200))
     
-    def __init__(self,n,p,m):
+    def __init__(self,n,p,m,l):
         
         self.name = n
         self.picture = p
         self.message = m
+        self.link = l
        
         
     def __repr__(self): # what's __repr__?
