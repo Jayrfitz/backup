@@ -3,15 +3,17 @@ import flask_sqlalchemy
 import app
 import os
 
-# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
 # # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://potato:potatosareawesome@localhost/postgres'
 # # db = flask_sqlalchemy.SQLAlchemy(app)
 
 # # app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://surf:password@localhost/postgres'
 
 # db = flask_sqlalchemy.SQLAlchemy(app.app)
-app.app.config['SQLALCHEMY_DATABASE_URI'] = \
-'postgresql://potato:potatosareawesome@localhost/postgres'
+# app.app.config['SQLALCHEMY_DATABASE_URI'] = \
+# 'postgresql://potato:potatosareawesome@localhost/postgres'
+
+app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = flask_sqlalchemy.SQLAlchemy(app.app)
 
 class Message(db.Model):
