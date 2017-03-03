@@ -74,7 +74,8 @@ def chatbot(data, all_mah_message):
                 'name': "Chat Bot",
                 'picture': "static/bot.jpg",
                 'message': "Whats up dude im chatbot and you are chatting, whats up with that?"
-                "Commands are !! help,!! sing,!! joke,!! say <something>",
+                "Commands are (!! help,!! sing,!! joke,!! say <something>,!! weather cityname) for example"
+                "!! weather London",
             }
         elif "!! help" in data['message']:
             print "Bot says what"
