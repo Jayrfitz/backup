@@ -64,7 +64,7 @@ export class Content extends React.Component {
         return (
             <div id="formborder">
                 <div>
-                     <h1>Message</h1>
+                     <h1>Heman Chat</h1>
                      <div>
                         <h3>chat</h3>
                          <div className="scroll"> 

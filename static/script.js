@@ -13149,7 +13149,7 @@ var Content = exports.Content = function (_React$Component) {
                     React.createElement(
                         'h1',
                         null,
-                        'Message'
+                        'Heman Chat'
                     ),
                     React.createElement(
                         'div',
