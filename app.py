@@ -86,7 +86,10 @@ def chatbot(data, all_mah_message):
                 "You can login to Facebook\n"
                 "You can login to Gmail\n"
                 "Then you can send messages\n"
-                "I wish i could tell you more\n",
+                "bot commands are !! help,!! sing,"
+                "!! joke,!! say <something>,"
+                "!! weather cityname) for example"
+                "!! weather London\n",
             }
             
         elif "!! sing" in data['message']:
@@ -94,10 +97,9 @@ def chatbot(data, all_mah_message):
             botmessage = {
                 'name': "Chat Bot",
                 'picture': "static/bot.jpg",
-                'message': "I am not your robot, I am not a clone. "
-                "You are not my puppeteer and I am not a drone. "
-                "Got a new master and I follow Him alone. "
-                "I want a good life till I'm gone. ",
+                'message': "And I say hey, yeah, yeah, yeah yay"
+                "Hey, yay, yay"
+                "I said hey, what's goin' on?",
             }
           
         elif "!! joke" in data['message']:
