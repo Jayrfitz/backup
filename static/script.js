@@ -13180,7 +13180,7 @@ var Content = exports.Content = function (_React$Component) {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'scroll' },
+                            { className: 'scroll2' },
                             React.createElement(
                                 'ul',
                                 null,

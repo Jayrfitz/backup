@@ -74,7 +74,7 @@ export class Content extends React.Component {
                             <h3>users<ul>{userNum}</ul></h3>
                          </div>
                          
-                         <div className="scroll"> 
+                         <div className="scroll2"> 
                             <ul>{userlist}</ul>
                          </div>
                      </div>

@@ -15,8 +15,17 @@ body{
 }
 div.scroll {
     width: 800px;
-    height: 200px;
+    height: 300px;
     overflow-x: hidden;
     overflow-y: scroll;
     background: white;
+    border-radius: 25px;
+}
+div.scroll {
+    width: 800px;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: white;
+    border-radius: 25px;
 }
