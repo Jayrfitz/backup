@@ -65,10 +65,10 @@ def botApi(apiCity):
         
 # # ###########################################################################
 # # chat bot    
-def chatbot(data, all_mah_message):
+def chatbot(message):
     botmessage = ''
-    if "!! " in data['message']:
-        if "!! about" in data['message']:
+    if "!! " in message:
+        if "!! about" in message:
             print "Bot says what"
             botmessage = {
                 'name': "Chat Bot",
@@ -78,23 +78,23 @@ def chatbot(data, all_mah_message):
                 "!! weather London",
                 'link':'',
             }
-        elif "!! help" in data['message']:
+        elif "!! help" in message:
             print "Bot says what"
             botmessage = {
                 'name': "Chat Bot",
                 'picture': "static/bot.jpg",
-                'message': "Help\n"
-                "You can login to Facebook\n"
-                "You can login to Gmail\n"
-                "Then you can send messages\n"
+                'message': "Help"
+                "You can login to Facebook"
+                "You can login to Gmail"
+                "Then you can send messages"
                 "bot commands are !! help,!! sing,"
                 "!! joke,!! say <something>,"
                 "!! weather cityname) for example"
-                "!! weather London\n",
+                "!! weather London",
                 'link':'',
             }
             
-        elif "!! sing" in data['message']:
+        elif "!! sing" in message:
             print "Bot says what"
             botmessage = {
                 'name': "Chat Bot",
@@ -105,7 +105,7 @@ def chatbot(data, all_mah_message):
                 'link':'',
             }
           
-        elif "!! joke" in data['message']:
+        elif "!! joke" in message:
             print "Bot says what"
             botmessage = {
                 'name': "Chat Bot",
@@ -114,19 +114,19 @@ def chatbot(data, all_mah_message):
                 'link':'',
             }
             
-        elif "!! say " in data['message']:
+        elif "!! say " in message:
             print "Bot says what"
-            data['message'] = data['message'].replace("!! say ", "")
+            message = message.replace("!! say ", "")
             botmessage = {
                 'name': "Chat Bot",
                 'picture': "static/bot.jpg",
-                'message': data['message'],
+                'message': message,
                 'link':'',
             }
-        elif "!! weather " in data['message']:
+        elif "!! weather " in message:
             print "Bot says what"
-            data['message'] = data['message'].replace("!! weather ", "")
-            apiCity = data['message']
+            message = message.replace("!! weather ", "")
+            apiCity = message
             weather = botApi(apiCity)
             botmessage = {
                 'name': "Chat Bot",
@@ -142,7 +142,7 @@ def chatbot(data, all_mah_message):
                 'message': "not a command",
                 'link':'',
             }
-        commitMessage(botmessage)
+        
         return(botmessage)
     else:
         return(botmessage)
@@ -193,7 +193,9 @@ def on_new_message(data):
         all_mah_message = getmessages()
         all_mah_message.append(message)
         commitMessage(message)
-        botmessage = chatbot(data,all_mah_message)
+        
+        botmessage = chatbot(data['message'])
+        commitMessage(botmessage)
         if botmessage != "":
             all_mah_message.append(botmessage)
             
@@ -259,7 +261,8 @@ def on_new_message(data):
         all_mah_message = getmessages()
         all_mah_message.append(message)
         commitMessage(message)
-        botmessage = chatbot(data,all_mah_message)
+        botmessage = chatbot(data['message'])
+        commitMessage(botmessage)
         if botmessage != "":
             all_mah_message.append(botmessage)
         
