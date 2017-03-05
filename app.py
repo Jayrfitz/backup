@@ -131,7 +131,6 @@ def on_new_message(data):
         #link and jpg,png
         mess = data['message']
         
-        # end = len(mess) - (len(mess) - 4)
         end = mess[-4:]
         end5 = mess[-5:]
         link = ''
@@ -154,7 +153,7 @@ def on_new_message(data):
             
         }
         
-        # print "Got an event for new message with data:", data
+   
         
         all_mah_message = getmessages()
         all_mah_message.append(message)
@@ -171,15 +170,7 @@ def on_new_message(data):
             commitMessage(message)
             all_mah_message.append(message)
             
-        # all_mah_message.append({
-        #     'name': json['name'],
-        #     'picture': json['picture']['data']['url'],
-        #     'message': data['message'],
-        #     'link': link
-        # })
-        
-        
-        
+        ####### userlist
         
         for k in all_mah_user:
            if json['name'] == k['name']:
@@ -206,8 +197,7 @@ def on_new_message(data):
         #########################################
         #link and jpg,png
         mess = data['message']
-        
-        # end = len(mess) - (len(mess) - 4)
+
         end = mess[-4:]
         end5 = mess[-5:]
         link = ''

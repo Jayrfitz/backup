@@ -1,4 +1,6 @@
-import app 
+import sys
+sys.path.append('..')
+import app
 import unittest
 
 class ChatbotResponseTest(unittest.TestCase):
