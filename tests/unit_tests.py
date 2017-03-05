@@ -52,6 +52,7 @@ chatting us !! help for more""")
     def test_command10(self):
         r = app.chatbot('!! botname')
         self.assertEqual(r,'heman bot')
+        
     
 if __name__ == '__main__':
     unittest.main()
