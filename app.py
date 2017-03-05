@@ -220,8 +220,6 @@ def on_new_message(data):
 
         print link
         
-        
-
         message = {
             'name': json['name'],
             'picture': json['picture'],
