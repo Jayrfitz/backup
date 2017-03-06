@@ -250,8 +250,6 @@ def on_new_message(data):
     socketio.emit('all messages', {
         'messages': all_mah_message
     })
-    # print all_mah_message
-    # print all_mah_user
     socketio.emit('userlist', {
         'userlist': all_mah_user
         })
