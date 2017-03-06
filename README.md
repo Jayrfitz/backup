@@ -17,6 +17,14 @@ bot will sing heman in text.
     I tryied to get a audio file to play the heman song on my page it ended up
 not working.
 
+Commands are:
+!! about
+!! help
+!! sing
+!! joke
+!! botname
+!! say something
+!! weather cityname
 
 ## Problems
 
