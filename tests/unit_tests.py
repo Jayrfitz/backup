@@ -32,7 +32,7 @@ I said hey, what's goin' on?""")
     def test_command6(self):
         r = app.chatbot('!! about')
         self.assertEqual(r,"""Whats up dude im chatbot and you are 
-chatting us !! help for more""")
+chatting use !! help for more""")
     def test_command7(self):
         r = app.chatbot('!! say https://www.facebook.com/jason.fitzgerald.7587')
         self.assertEqual(r,'https://www.facebook.com/jason.fitzgerald.7587')

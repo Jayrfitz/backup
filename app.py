@@ -71,7 +71,7 @@ def chatbot(message):
         if "!! about" in message:
             print "Bot says what"
             botmessage = """Whats up dude im chatbot and you are 
-chatting us !! help for more"""
+chatting use !! help for more"""
                 
         elif "!! help" in message:
             print "Bot says what"

@@ -8,5 +8,11 @@ import unittest
 #         r = app.chatbot('!! ab')
 #         self.assertEqual('not a command',r)
     
+    
+    
+    
+    
+    
+    
 if __name__ == '__main__':
     unittest.main()
