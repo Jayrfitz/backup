@@ -5,6 +5,7 @@ import requests
 import flask_sqlalchemy
 import json
 from flask import Flask, request
+from flask_socketio import SocketIO, send
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
@@ -19,15 +20,12 @@ user = ''
 disconnect = ''
 @socketio.on('connect')
 def on_connect():
-    global user
-    user = request.sid
-    print user
-    print 'Someone connected!'
+    send('connected')
 
 @socketio.on('disconnect')
 def on_disconnect():
-    global user
-    print 'Someone disconnected!'
+    global disconnected
+    disconnected = '/'
     
 all_mah_message = []
 all_mah_user = []
@@ -252,7 +250,9 @@ def on_new_message(data):
     })
     socketio.emit('userlist', {
         'userlist': all_mah_user
-        })
+    })
+
+
 if __name__ == '__main__':
     socketio.run(
         app,
