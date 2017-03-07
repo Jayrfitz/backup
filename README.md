@@ -9,11 +9,11 @@ The chat bot should tell the users that someone new online and there added to
 the user list. But the Bot only resopnse to the commands (!! about). Lastly 
 when the user sends a message, the messages in the messages div with the 
 user name and profile picture. My bot also has a weather api command  when
-(!! weather 'city') is prompted. the messager will also render links and images
-through the react message componet.
+(!! weather cityname) is prompted. the messager will also render links and images
+through the react message component.
     The points I missed in part 1 that I fixed in part 2 were the !! say, 
-!! help, and, the theme. The theme on the chat app is heman chat, the 
-bot will sing heman in text. 
+!! help, the theme and another command like botname. The theme on the 
+chat app is heman chat, the bot will sing heman in text. 
     I tryied to get a audio file to play the heman song on my page it ended up
 not working.
 
@@ -24,7 +24,8 @@ Commands are:
 !! joke
 !! botname
 !! say something
-!! weather cityname
+!! weather cityname 
+for example (!! weather london)
 
 ## Problems
 
@@ -36,4 +37,4 @@ users don't get remove from user list when log out occurs.
 ## improvements
 
 
-Also the logouts to update the userlist.
+I would have like to improvement the userlist and some of the tests.
