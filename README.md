@@ -25,14 +25,16 @@ Commands are:
 !! botname
 !! say something
 !! weather cityname 
+
+
 for example (!! weather london)
 
 ## Problems
 
 
 Bot don't write to all the clients when someone logs in or logs out.
-
 users don't get remove from user list when log out occurs.
+integration tests
 
 ## improvements
 
